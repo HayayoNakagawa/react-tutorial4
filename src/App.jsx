@@ -1,27 +1,25 @@
 import { useEffect, useState } from "react";
 
-// 商品データを取得する関数
 async function fetchProducts() {
   const response = await fetch("/products.json");
   return response.json();
 }
 
 export default function App() {
-  const [products, setProducts] = useState([]); // 全商品データ
-  const [filteredProducts, setFilteredProducts] = useState([]); // フィルタリングされた商品
-  const [category, setCategory] = useState("All"); // 選択されたカテゴリ
-  const [searchTerm, setSearchTerm] = useState(""); // 検索キーワード
+  const [products, setProducts] = useState([]); 
+  const [filteredProducts, setFilteredProducts] = useState([]); 
+  const [category, setCategory] = useState("All"); 
+  const [searchTerm, setSearchTerm] = useState(""); 
 
-  // 初回レンダリング時に商品データを取得
+
   useEffect(() => {
     (async () => {
       const productData = await fetchProducts();
       setProducts(productData);
-      setFilteredProducts(productData); // 初期状態では全商品を表示
+      setFilteredProducts(productData); 
     })();
   }, []);
 
-  // カテゴリまたは検索ワードが変わったときに商品をフィルタリング
   useEffect(() => {
     const results = products.filter((product) => {
       const matchesCategory =
